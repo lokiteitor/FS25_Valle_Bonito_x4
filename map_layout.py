@@ -21,9 +21,9 @@ import random
 # ==================================================================================
 # 1. Map Coordinates & Canvas Dimensions
 # ==================================================================================
-# The projection anchor (geographic centre of the map)
-LAT_CENTER = 43.14569235
-LON_CENTER = -95.14507865
+# The projection anchor (geographic centre of the map: Ojuelos de Jalisco, Jalisco, México)
+LAT_CENTER = 21.86529000
+LON_CENTER = -101.59351000
 
 # Map dimensions (in metres)
 PLAYABLE_M = 4096.0

@@ -48,7 +48,7 @@ and not the other is invisible in either on its own. Standard library only: noth
 - Playable metres: **x east, y south from the north edge**, centre `(2048, 2048)`. Canvas
   is 8192 m with the 4096 m playable square centred, so canvas coordinates run
   `-2048 .. 6144` in the same frame (`OFFSET_M = 2048.0`).
-- Projection is equirectangular about `LAT_CENTER = 43.145712, LON_CENTER = -95.145100` at 111111.0 m per degree.
+- Projection is equirectangular about `LAT_CENTER = 21.865290, LON_CENTER = -101.593510` (Ojuelos de Jalisco, Jalisco, México) at 111111.0 m per degree.
 - Heights are 16-bit centimetres: raw 2500 = 25.00 m. `BASE_ELEV_M` (25.0) is the datum.
   The Iowa glacial till plain undulates from 10.0 m (lake basin) to ~35-45 m on uplands,
   with Colina Espiral rising to 225.0 m.
