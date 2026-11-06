@@ -1,14 +1,14 @@
 <?xml version='1.0' encoding='utf-8'?>
 <map xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../shared/xml/schema/farmlands.xsd">
   <farmlands infoLayer="farmlands" pricePerHa="12500">
-    <farmland id="1" priceScale="0.6" npcName="GRANDPA" />
-    <farmland id="2" priceScale="0.6" npcName="GRANDPA" />
-    <farmland id="3" priceScale="0.6" npcName="GRANDPA" />
-    <farmland id="4" priceScale="0.6" npcName="GRANDPA" />
+    <farmland id="1" priceScale="0.6" npcName="GRANDPA" defaultFarmProperty="true"/>
+    <farmland id="2" priceScale="0.6" npcName="GRANDPA" defaultFarmProperty="true"/>
+    <farmland id="3" priceScale="0.6" npcName="GRANDPA" defaultFarmProperty="true"/>
+    <farmland id="4" priceScale="0.6" npcName="GRANDPA" defaultFarmProperty="true"/>
     <farmland id="5" priceScale="0.6" npcName="GRANDPA" />
     <farmland id="6" priceScale="0.6" npcName="GRANDPA" />
     <farmland id="7" priceScale="0.6" npcName="GRANDPA" />
-    <farmland id="8" priceScale="0.6" npcName="GRANDPA" />
+    <farmland id="8" priceScale="0.6" npcName="GRANDPA" defaultFarmProperty="true"/>
     <farmland id="9" priceScale="0.6" npcName="GRANDPA" />
     <farmland id="10" priceScale="0.6" npcName="GRANDPA" />
     <farmland id="11" priceScale="0.6" npcName="GRANDPA" />
