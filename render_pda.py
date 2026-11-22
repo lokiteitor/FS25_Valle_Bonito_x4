@@ -23,9 +23,9 @@ TAMANO_TOTAL = 4096     # 1024 + 2048 + 1024 = 4096 px
 PLAYABLE_M = 4096.0     # 4096 metros del área jugable (mapa x4)
 HALF_M = PLAYABLE_M / 2.0
 
-# Ancla de proyección geográfica (por defecto de map_layout.py: Ojuelos de Jalisco, Jalisco, México)
-LAT_CENTER = 21.86529000
-LON_CENTER = -101.59351000
+# Ancla de proyección geográfica (por defecto de map_layout.py: Tamuín, San Luis Potosí, México)
+LAT_CENTER = 22.00556000
+LON_CENTER = -98.78389000
 M_PER_DEG = 111111.0
 M_PER_DEG_LON = M_PER_DEG * math.cos(math.radians(LAT_CENTER))
 
