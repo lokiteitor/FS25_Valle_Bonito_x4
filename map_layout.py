@@ -1106,6 +1106,47 @@ for _r_idx, (_ry0, _ry1) in enumerate(_P23_P24_ROWS_Y):
         tags={'landuse': 'farmland'},
     )
 
+# Subdivisión de Parcelas 34 y 35 en campos rectangulares (4 campos de ~6.75 ha, ratio ~2.70)
+# Parcela 34 (Norte, Y=1533..1857.5) dividida en 34-A y 34-B
+add_field(
+    fid='field_p34_a',
+    name='Parcela 34-A (Rectangular)',
+    ring=rect_ring(945.0, 1533.0, 1372.0, 1691.0),
+    tags={'landuse': 'farmland'},
+)
+add_field(
+    fid='field_p34_b',
+    name='Parcela 34-B (Rectangular)',
+    ring=rect_ring(945.0, 1699.0, 1372.0, 1857.5),
+    tags={'landuse': 'farmland'},
+)
+
+# Parcela 35 (Sur, Y=1867.5..2192) dividida en 35-A y 35-B
+add_field(
+    fid='field_p35_a',
+    name='Parcela 35-A (Rectangular)',
+    ring=rect_ring(945.0, 1867.5, 1372.0, 2025.5),
+    tags={'landuse': 'farmland'},
+)
+add_field(
+    fid='field_p35_b',
+    name='Parcela 35-B (Rectangular)',
+    ring=rect_ring(945.0, 2033.5, 1372.0, 2192.0),
+    tags={'landuse': 'farmland'},
+)
+
+# Camino de acceso entre Parcela 34 y Parcela 35 (Y=1862.5)
+add_corridor(
+    cid='track_sec_p34_p35',
+    name='Camino Interparcelario 34-35',
+    kind='track',
+    axis=[(945.0, 1862.5), (1380.0, 1862.5)],
+    half_width_m=2.5,
+    feather_m=5.0,
+    grade_max=0.08,
+    tags={'highway': 'track', 'surface': 'dirt', 'name': 'Camino Interparcelario 34-35'},
+)
+
 # Granja 3 (along Terracería Oeste x=500, sitting east, well south of town between Y=1525 and Y=2200)
 add_pad(
     pid='pad_farmyard_3',
@@ -1292,6 +1333,58 @@ for _b_side, _b_breaks in _BORDER_BREAKS:
             is_border=True,
         )
 
+# Cortavientos en espacios libres:
+# 1. Franja libre al oeste de Granja Principal Sureste y Parcela 65 (a lo largo de Terracería X=3012)
+add_wood(
+    wid='wood_belt_farm_se',
+    name='Cortavientos Granja Principal - Parcela 65',
+    ring=rect_ring(3025.0, 2760.0, 3075.0, 3485.0),
+    leaf_type='broadleaved',
+)
+
+# 2. Espacio libre al lado este de Parcela 72 (al sur de Granja 4)
+add_wood(
+    wid='wood_belt_field_72',
+    name='Cortavientos Parcela 72',
+    ring=rect_ring(1908.0, 3895.0, 1988.0, 4055.0),
+    leaf_type='broadleaved',
+)
+
+# 3. Espacios libres cerca de los pueblos:
+# 3A. Franja sur de Pueblo Valle Bonito (entre el pueblo y las parcelas 23/24)
+add_wood(
+    wid='wood_belt_town_nw_1',
+    name='Cortavientos Pueblo Valle Bonito Sur 1',
+    ring=rect_ring(570.0, 875.0, 740.0, 925.0),
+    leaf_type='broadleaved',
+)
+add_wood(
+    wid='wood_belt_town_nw_2',
+    name='Cortavientos Pueblo Valle Bonito Sur 2',
+    ring=rect_ring(775.0, 875.0, 945.0, 925.0),
+    leaf_type='broadleaved',
+)
+add_wood(
+    wid='wood_belt_town_nw_3',
+    name='Cortavientos Pueblo Valle Bonito Sur 3',
+    ring=rect_ring(1065.0, 875.0, 1200.0, 925.0),
+    leaf_type='broadleaved',
+)
+
+# 3B. Pueblo Este: Franja norte (entre Ruta Y=1525 y el pueblo) y Franja sur (al este de zona industrial)
+add_wood(
+    wid='wood_belt_town_east_n',
+    name='Cortavientos Norte Pueblo Este',
+    ring=rect_ring(3665.0, 1538.0, 4035.0, 1588.0),
+    leaf_type='broadleaved',
+)
+add_wood(
+    wid='wood_belt_town_east_s',
+    name='Cortavientos Sur Pueblo Este',
+    ring=rect_ring(3815.0, 2115.0, 4035.0, 2185.0),
+    leaf_type='broadleaved',
+)
+
 # Curved obstacles for field boundary shaping
 _CURVED_OBSTACLES = [
     (
@@ -1318,7 +1411,7 @@ _CURVED_OBSTACLES = [
 def _retract_from_shelterbelts(x0, y0, x1, y1):
     cand = rect_ring(x0, y0, x1, y1)
     for a in AREAS:
-        if a['kind'] == 'wood' and 'Rompevientos' in a.get('name', ''):
+        if a['kind'] == 'wood' and ('Rompevientos' in a.get('name', '') or 'Cortavientos' in a.get('name', '')):
             if rings_overlap(cand, a['ring']):
                 ax0 = min(p[0] for p in a['ring'])
                 ax1 = max(p[0] for p in a['ring'])
@@ -1349,6 +1442,8 @@ _VILLAGE_OBSTACLES = [
     (3595.0, 2095.0, 3805.0, 2305.0),
     # Sector Parcelas 23 y 24: parcelas cuadradas de 4 ha y rectangulares de 8 ha
     (560.0, 946.0, 1376.0, 1521.0),
+    # Sector Parcelas 34 y 35: subdivididas en campos rectangulares
+    (940.0, 1528.0, 1377.0, 2197.0),
 ]
 
 
