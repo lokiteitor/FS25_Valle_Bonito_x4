@@ -611,7 +611,6 @@ add_corridor(
 )
 
 # Dirt roads (terracerías) along x = 500 and y = 3500
-# Notice: Along the town (y=400..1096), x=500 is a paved secondary street (Calle Oeste)
 add_corridor(
     cid='track_x500_n',
     name='Terracería Oeste Norte (X=500)',
@@ -624,21 +623,10 @@ add_corridor(
 )
 
 add_corridor(
-    cid='road_town_nw_v0',
-    name='Calle Oeste',
-    kind='secondary',
-    axis=[(500.0, 400.0), (500.0, 1096.0)],
-    half_width_m=3.5,
-    feather_m=6.0,
-    grade_max=0.05,
-    tags={'highway': 'secondary', 'name': 'Calle Oeste'},
-)
-
-add_corridor(
     cid='track_x500_s',
     name='Terracería Oeste (X=500)',
     kind='track',
-    axis=[(500.0, 1096.0), (500.0, PLAYABLE_M)],
+    axis=[(500.0, 400.0), (500.0, PLAYABLE_M)],
     half_width_m=3.0,
     feather_m=6.0,
     grade_max=0.08,
@@ -656,56 +644,93 @@ add_corridor(
     tags={'highway': 'track', 'surface': 'dirt', 'name': 'Terracería Sur'},
 )
 
-# 4x6 town grid at the NW intersection (x=500, y=400)
-# 4 columns E-W, 6 rows N-S
-_TOWN_NW_X0 = 500.0
-_TOWN_NW_Y0 = 400.0
-_TOWN_NW_COLS = 4
-_TOWN_NW_ROWS = 6
-_TOWN_NW_BLOCK_X_M = 200.0
-_TOWN_NW_BLOCK_Y_M = 100.0
-_TOWN_NW_STREET_GAP_M = 16.0
-_TOWN_NW_PITCH_X_M = _TOWN_NW_BLOCK_X_M + _TOWN_NW_STREET_GAP_M  # 216.0 m
-_TOWN_NW_PITCH_Y_M = _TOWN_NW_BLOCK_Y_M + _TOWN_NW_STREET_GAP_M  # 116.0 m
-_TOWN_NW_SPAN_X_M = _TOWN_NW_COLS * _TOWN_NW_PITCH_X_M          # 864.0 m
-_TOWN_NW_SPAN_Y_M = _TOWN_NW_ROWS * _TOWN_NW_PITCH_Y_M          # 696.0 m
+# Pueblo Valle Bonito (NW): 2 cuadras / franjas lineales estilo ruso (derevnya)
+# Dos calles Norte-Sur a X=750 y X=1050, enlazadas al norte con Ruta Y=400 y al sur por conector Y=850
+add_corridor(
+    cid='road_town_nw_c1',
+    name='Calle Norte-Sur 1 (Valle Bonito)',
+    kind='secondary',
+    axis=[(750.0, 400.0), (750.0, 850.0)],
+    half_width_m=3.5,
+    feather_m=6.0,
+    grade_max=0.05,
+    tags={'highway': 'secondary', 'name': 'Calle Norte-Sur 1'},
+)
 
+add_corridor(
+    cid='road_town_nw_c2',
+    name='Calle Norte-Sur 2 (Valle Bonito)',
+    kind='secondary',
+    axis=[(1050.0, 400.0), (1050.0, 850.0)],
+    half_width_m=3.5,
+    feather_m=6.0,
+    grade_max=0.05,
+    tags={'highway': 'secondary', 'name': 'Calle Norte-Sur 2'},
+)
+
+add_corridor(
+    cid='road_town_nw_conn_s',
+    name='Calle Conectora Sur (Valle Bonito)',
+    kind='secondary',
+    axis=[(500.0, 850.0), (1050.0, 850.0)],
+    half_width_m=3.5,
+    feather_m=6.0,
+    grade_max=0.05,
+    tags={'highway': 'secondary', 'name': 'Calle Conectora Sur'},
+)
+
+# Pads residenciales a lo largo de las 2 calles (patios y casas)
 add_pad(
-    pid='pad_town_nw',
-    name='Pueblo Valle Bonito',
+    pid='pad_town_nw_c1',
+    name='Pueblo Valle Bonito - Sector Oeste',
     kind='village',
-    centre=(_TOWN_NW_X0 + _TOWN_NW_SPAN_X_M / 2.0, _TOWN_NW_Y0 + _TOWN_NW_SPAN_Y_M / 2.0),
-    size=(_TOWN_NW_SPAN_X_M, _TOWN_NW_SPAN_Y_M),
-    feather_m=25.0,
+    centre=(750.0, 625.0),
+    size=(70.0, 410.0),
+    feather_m=15.0,
     drain_grade=0.0,
     level=True,
     tags={'landuse': 'farmyard'},
 )
 
-for _k in range(1, _TOWN_NW_COLS + 1):
-    _sx = _TOWN_NW_X0 + _k * _TOWN_NW_PITCH_X_M
-    add_corridor(
-        cid=f'road_town_nw_v{_k}',
-        name=f'Calle Norte-Sur {_k}',
-        kind='secondary',
-        axis=[(_sx, _TOWN_NW_Y0), (_sx, _TOWN_NW_Y0 + _TOWN_NW_SPAN_Y_M)],
-        half_width_m=3.5,
-        feather_m=6.0,
-        grade_max=0.05,
-        tags={'highway': 'secondary', 'name': f'Calle Norte-Sur {_k}'},
-    )
+add_pad(
+    pid='pad_town_nw_c2',
+    name='Pueblo Valle Bonito - Sector Este',
+    kind='village',
+    centre=(1050.0, 625.0),
+    size=(70.0, 410.0),
+    feather_m=15.0,
+    drain_grade=0.0,
+    level=True,
+    tags={'landuse': 'farmyard'},
+)
 
-for _k in range(1, _TOWN_NW_ROWS + 1):
-    _sy = _TOWN_NW_Y0 + _k * _TOWN_NW_PITCH_Y_M
-    add_corridor(
-        cid=f'road_town_nw_h{_k}',
-        name=f'Calle Este-Oeste {_k}',
-        kind='secondary',
-        axis=[(_TOWN_NW_X0, _sy), (_TOWN_NW_X0 + _TOWN_NW_SPAN_X_M, _sy)],
-        half_width_m=3.5,
-        feather_m=6.0,
-        grade_max=0.05,
-        tags={'highway': 'secondary', 'name': f'Calle Este-Oeste {_k}'},
+# 24 Huertos traseros pequeños (~0.7 ha c/u) estilo ruso detrás de las casas
+for _k in range(6):
+    _yk0 = 425.0 + _k * 70.0 + 3.0
+    _yk1 = _yk0 + 64.0
+    add_field(
+        fid=f'field_vb_w{_k+1}',
+        name=f'Huerto Valle Bonito O{_k+1}',
+        ring=rect_ring(604.0, _yk0, 711.0, _yk1),
+        tags={'landuse': 'farmland'},
+    )
+    add_field(
+        fid=f'field_vb_c1_{_k+1}',
+        name=f'Huerto Valle Bonito C1-{_k+1}',
+        ring=rect_ring(789.0, _yk0, 896.0, _yk1),
+        tags={'landuse': 'farmland'},
+    )
+    add_field(
+        fid=f'field_vb_c2_{_k+1}',
+        name=f'Huerto Valle Bonito C2-{_k+1}',
+        ring=rect_ring(904.0, _yk0, 1011.0, _yk1),
+        tags={'landuse': 'farmland'},
+    )
+    add_field(
+        fid=f'field_vb_e{_k+1}',
+        name=f'Huerto Valle Bonito E{_k+1}',
+        ring=rect_ring(1089.0, _yk0, 1196.0, _yk1),
+        tags={'landuse': 'farmland'},
     )
 
 # Industrial farmyard north of town across primary road (reduced realistic size)
@@ -715,7 +740,7 @@ add_pad(
     pid='pad_industrial_nw',
     name='Zona Industrial Norte',
     kind='industry',
-    centre=(850.0, _TOWN_NW_Y0 - _IND_NW_HEIGHT_M / 2.0),
+    centre=(850.0, 400.0 - _IND_NW_HEIGHT_M / 2.0),
     size=(_IND_NW_WIDTH_M, _IND_NW_HEIGHT_M),
     feather_m=20.0,
     drain_grade=0.0,
@@ -801,7 +826,8 @@ add_corridor(
     tags={'highway': 'track', 'surface': 'dirt', 'name': 'Terracería Sección Y=2750'},
 )
 
-# 5 Granjas (Granja Principal Sureste = 500 x 500 m, plus Granjas 1..4 = 387.3 x 387.3 m / 15 ha)
+# Granjas (Granja Principal Sureste = 500 x 500 m, plus Granjas 1, 3, 4 = 387.3 x 387.3 m / 15 ha)
+# Granja 2 reemplazada por Pueblo Este (grid 4x4 de 100x100m)
 _FY15_SIDE_M = math.sqrt(15.0 * 10000.0)  # 387.3 m
 
 # Granja Principal Sureste (SE corner, interior of (x=3600, y=3500))
@@ -831,18 +857,84 @@ add_pad(
     tags={'landuse': 'farmyard'},
 )
 
-# Granja 2 (along Ruta Principal Este x=3600, sitting east)
+# Pueblo Este: calle colectora paralela a Ruta 3600 (estilo ruso) con 8 casas y parcelas de 1.5 ha detrás
+_TOWN_EAST_X0 = 3600.0
+_TOWN_EAST_COLLECTOR_X = 3740.0
+_TOWN_EAST_Y0 = 1600.0
+_TOWN_EAST_Y1 = 2100.0
+_TOWN_EAST_SPAN_Y_M = _TOWN_EAST_Y1 - _TOWN_EAST_Y0                   # 500.0 m
+
+# Calle Colectora Norte-Sur paralela a Ruta 3600
+add_corridor(
+    cid='road_town_east_collector',
+    name='Calle Colectora Pueblo Este',
+    kind='secondary',
+    axis=[(_TOWN_EAST_COLLECTOR_X, _TOWN_EAST_Y0), (_TOWN_EAST_COLLECTOR_X, _TOWN_EAST_Y1)],
+    half_width_m=3.5,
+    feather_m=6.0,
+    grade_max=0.05,
+    tags={'highway': 'secondary', 'name': 'Calle Colectora Pueblo Este'},
+)
+
+# 3 Enlaces perpendiculares a la Ruta Principal Este (X=3600)
+add_corridor(
+    cid='road_town_east_link_n',
+    name='Acceso Norte Pueblo Este',
+    kind='secondary',
+    axis=[(_TOWN_EAST_X0, _TOWN_EAST_Y0), (_TOWN_EAST_COLLECTOR_X, _TOWN_EAST_Y0)],
+    half_width_m=3.5,
+    feather_m=6.0,
+    grade_max=0.05,
+    tags={'highway': 'secondary', 'name': 'Acceso Norte Pueblo Este'},
+)
+
+add_corridor(
+    cid='road_town_east_link_c',
+    name='Acceso Central Pueblo Este',
+    kind='secondary',
+    axis=[(_TOWN_EAST_X0, 1850.0), (_TOWN_EAST_COLLECTOR_X, 1850.0)],
+    half_width_m=3.5,
+    feather_m=6.0,
+    grade_max=0.05,
+    tags={'highway': 'secondary', 'name': 'Acceso Central Pueblo Este'},
+)
+
+add_corridor(
+    cid='road_town_east_link_s',
+    name='Acceso Sur Pueblo Este',
+    kind='secondary',
+    axis=[(_TOWN_EAST_X0, _TOWN_EAST_Y1), (_TOWN_EAST_COLLECTOR_X, _TOWN_EAST_Y1)],
+    half_width_m=3.5,
+    feather_m=6.0,
+    grade_max=0.05,
+    tags={'highway': 'secondary', 'name': 'Acceso Sur Pueblo Este'},
+)
+
+# Franja residencial de casas y patios al este de la colectora
 add_pad(
-    pid='pad_farmyard_2',
-    name='Granja 2',
-    kind='farmyard',
-    centre=(3600.0 + _FY15_SIDE_M / 2.0, 1850.0),
-    size=(_FY15_SIDE_M, _FY15_SIDE_M),
-    feather_m=20.0,
+    pid='pad_town_east',
+    name='Pueblo Este',
+    kind='village',
+    centre=(_TOWN_EAST_COLLECTOR_X + 25.0, (_TOWN_EAST_Y0 + _TOWN_EAST_Y1) / 2.0),
+    size=(50.0, _TOWN_EAST_SPAN_Y_M),
+    feather_m=15.0,
     drain_grade=0.0,
     level=True,
     tags={'landuse': 'farmyard'},
 )
+
+# 8 Parcelas agrícolas traseras de exactamente 1.50 ha cada una (60m ancho x 250m fondo = 15,000 m2)
+_PE_SLOT_H = _TOWN_EAST_SPAN_Y_M / 8.0  # 62.5 m
+for _k in range(8):
+    _pe_y0 = _TOWN_EAST_Y0 + _k * _PE_SLOT_H + 1.25
+    _pe_y1 = _pe_y0 + 60.0  # 60.0 m de ancho
+    # 60.0 m de ancho x 250.0 m de fondo = 15,000 m2 = 1.50 ha exactas
+    add_field(
+        fid=f'field_pe_{_k+1}',
+        name=f'Parcela Pueblo Este {_k+1} (1.5 ha)',
+        ring=rect_ring(3790.0, _pe_y0, 4040.0, _pe_y1),
+        tags={'landuse': 'farmland'},
+    )
 
 # Granja 3 (along Terracería Oeste x=500, sitting east, well south of town between Y=1525 and Y=2200)
 add_pad(
@@ -1075,13 +1167,28 @@ def _retract_from_shelterbelts(x0, y0, x1, y1):
     return x0, y0, x1, y1
 
 
+# Village bounds to protect rural village layouts from macro-PLSS slicing
+_VILLAGE_OBSTACLES = [
+    # Pueblo Valle Bonito: area encompassing 2 street axes and small rear garden plots
+    (595.0, 395.0, 1205.0, 875.0),
+    # Pueblo Este: area encompassing collector road, house yards and 1.5 ha parcels
+    (3595.0, 1595.0, 4045.0, 2105.0),
+]
+
+
 def _subtract_pad_obstacles(boxes, min_dim=90.0, split_gap=8.0):
     cur_boxes = list(boxes)
+    all_obs = []
     for p in PADS:
         px0 = min(pt[0] for pt in p['ring']) - split_gap
         px1 = max(pt[0] for pt in p['ring']) + split_gap
         py0 = min(pt[1] for pt in p['ring']) - split_gap
         py1 = max(pt[1] for pt in p['ring']) + split_gap
+        all_obs.append((px0, py0, px1, py1))
+    for vx0, vy0, vx1, vy1 in _VILLAGE_OBSTACLES:
+        all_obs.append((vx0 - split_gap, vy0 - split_gap, vx1 + split_gap, vy1 + split_gap))
+
+    for px0, py0, px1, py1 in all_obs:
         next_boxes = []
         for bx0, by0, bx1, by1 in cur_boxes:
             ox0, oy0 = max(bx0, px0), max(by0, py0)
@@ -1170,58 +1277,104 @@ def _plss_subdivide_section(x0, y0, x1, y1, gap=10.0):
     return parcels
 
 
-def _trim_box_to_curved_obstacles(x0, y0, x1, y1):
-    for cx, cy, a, b, rot_deg, harm, marg in _CURVED_OBSTACLES:
-        if x0 - 20.0 <= cx <= x1 + 20.0 and y0 - 20.0 <= cy <= y1 + 20.0:
-            return None
-        corner_qs = [
-            _harmonic_q(sx, sy, cx, cy, a, b, rot_deg, harm, marg)[0]
-            for sx in (x0, x1)
-            for sy in (y0, y1)
-        ]
-        if max(corner_qs) < 1.02:
-            return None
+def _trim_box_to_curved_obstacles(x0, y0, x1, y1, min_dim=50.0, min_area_ha=1.4):
+    """Trims box to clear curved obstacles (lake and spiral hill forest), preserving pure orthogonal rectangular shapes."""
+    r_margin = rect_ring(x0 - 6.0, y0 - 6.0, x1 + 6.0, y1 + 6.0)
+    has_overlap = False
+    for w in WATER:
+        if w.get('ring') and rings_overlap(r_margin, w['ring']):
+            has_overlap = True
+            break
+    if not has_overlap:
+        for a in AREAS:
+            if a['id'] == 'wood_hill_spiral' and rings_overlap(r_margin, a['ring']):
+                has_overlap = True
+                break
 
-    needs_curve = False
-    for cx, cy, a, b, rot_deg, harm, marg in _CURVED_OBSTACLES:
-        sample_qs = [
-            _harmonic_q(sx, sy, cx, cy, a, b, rot_deg, harm, marg)[0]
-            for sx in (x0, 0.5 * (x0 + x1), x1)
-            for sy in (y0, 0.5 * (y0 + y1), y1)
-        ]
-        if min(sample_qs) < 1.01:
-            needs_curve = True
+    if not has_overlap:
+        return rect_ring(x0, y0, x1, y1)
+
+    w = x1 - x0
+    h = y1 - y0
+    best = None
+    best_area = 0.0
+
+    def _box_ok(bx0, by0, bx1, by1):
+        cand = rect_ring(bx0 - 6.0, by0 - 6.0, bx1 + 6.0, by1 + 6.0)
+        for w in WATER:
+            if w.get('ring') and rings_overlap(cand, w['ring']):
+                return False
+        for a in AREAS:
+            if a['id'] == 'wood_hill_spiral' and rings_overlap(cand, a['ring']):
+                return False
+        return True
+
+    # 1D shrinks from each edge (x0, x1, y0, y1)
+    for step in range(1, 40):
+        nx0 = x0 + step * (w / 40.0)
+        if x1 - nx0 < min_dim:
+            break
+        if _box_ok(nx0, y0, x1, y1):
+            area = (x1 - nx0) * h / 10000.0
+            if area >= min_area_ha and area > best_area:
+                best = (nx0, y0, x1, y1)
+                best_area = area
             break
 
-    base_ring = rect_ring(x0, y0, x1, y1)
-    if not needs_curve:
-        return base_ring
+    for step in range(1, 40):
+        nx1 = x1 - step * (w / 40.0)
+        if nx1 - x0 < min_dim:
+            break
+        if _box_ok(x0, y0, nx1, y1):
+            area = (nx1 - x0) * h / 10000.0
+            if area >= min_area_ha and area > best_area:
+                best = (x0, y0, nx1, y1)
+                best_area = area
+            break
 
-    dense = densify(base_ring, 16.0)[:-1]
-    out = []
-    for px, py in dense:
-        for cx, cy, a, b, rot_deg, harm, marg in _CURVED_OBSTACLES:
-            q, th, _, _ = _harmonic_q(px, py, cx, cy, a, b, rot_deg, harm, marg)
-            if q < 1.0:
-                px, py = _point_at_harmonic_q(1.0, th, cx, cy, a, b, rot_deg, harm, marg)
-        px = max(EDGE_CLEAR_M + 4.0, min(PLAYABLE_M - EDGE_CLEAR_M - 4.0, px))
-        py = max(EDGE_CLEAR_M + 4.0, min(PLAYABLE_M - EDGE_CLEAR_M - 4.0, py))
-        if not out or math.dist(out[-1], (px, py)) >= 6.0:
-            out.append((px, py))
-    if len(out) >= 2 and math.dist(out[0], out[-1]) < 6.0:
-        out.pop()
-    if len(out) < 3:
-        return None
-    ring = close_ring(out)
-    if not ring_is_simple(ring) or ring_area_ha(ring) < 2.5:
-        return None
-    for w in WATER:
-        if w.get('ring') and rings_overlap(ring, w['ring']):
-            return None
-    for a in AREAS:
-        if a['id'] == 'wood_hill_spiral' and rings_overlap(ring, a['ring']):
-            return None
-    return ring
+    for step in range(1, 40):
+        ny0 = y0 + step * (h / 40.0)
+        if y1 - ny0 < min_dim:
+            break
+        if _box_ok(x0, ny0, x1, y1):
+            area = w * (y1 - ny0) / 10000.0
+            if area >= min_area_ha and area > best_area:
+                best = (x0, ny0, x1, y1)
+                best_area = area
+            break
+
+    for step in range(1, 40):
+        ny1 = y1 - step * (h / 40.0)
+        if ny1 - y0 < min_dim:
+            break
+        if _box_ok(x0, y0, x1, ny1):
+            area = w * (ny1 - y0) / 10000.0
+            if area >= min_area_ha and area > best_area:
+                best = (x0, y0, x1, ny1)
+                best_area = area
+            break
+
+    # 2D corner shrinks
+    for corner in [('x0', 'y0'), ('x1', 'y0'), ('x0', 'y1'), ('x1', 'y1')]:
+        cx_dir, cy_dir = corner
+        for s1 in range(2, 25, 2):
+            for s2 in range(2, 25, 2):
+                nx0 = x0 + s1 * (w / 30.0) if cx_dir == 'x0' else x0
+                nx1 = x1 - s1 * (w / 30.0) if cx_dir == 'x1' else x1
+                ny0 = y0 + s2 * (h / 30.0) if cy_dir == 'y0' else y0
+                ny1 = y1 - s2 * (h / 30.0) if cy_dir == 'y1' else y1
+                if nx1 - nx0 < min_dim or ny1 - ny0 < min_dim:
+                    continue
+                area = (nx1 - nx0) * (ny1 - ny0) / 10000.0
+                if area <= best_area or area < min_area_ha:
+                    continue
+                if _box_ok(nx0, ny0, nx1, ny1):
+                    best = (nx0, ny0, nx1, ny1)
+                    best_area = area
+
+    if best:
+        return rect_ring(best[0], best[1], best[2], best[3])
+    return None
 
 
 # Macro PLSS sections bounded by clean strip and road network
