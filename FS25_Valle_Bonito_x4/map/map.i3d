@@ -781,7 +781,7 @@
 
   <Scene>
     <Light name="sun" translation="0 400 0" rotation="-39.5664 39.1063 0" objectMask="0x83ff0000" nodeId="12" type="directional" color="1 1 1" emitDiffuse="true" emitSpecular="true" castShadowMap="true" depthMapBias="0.001" depthMapSlopeScaleBias="2" depthMapSlopeClamp="0.001" depthMapResolution="2048" shadowFarDistance="1000" shadowExtrusionDistance="200" softShadowsLightSize="0.5" softShadowsLightDistance="15" softShadowsDepthBiasFactor="1" softShadowsMaxPenumbraSize="0.5" numShadowMapSplits="5" shadowMapSplitDistancesParameter="0.9" lastShadowMapSplitBboxMin="-2048,-128,-2048" lastShadowMapSplitBboxMax="2048,148,2048" range="10000" scattering="true"/>
-    <Camera name="persp" translation="-188.21 109.251 -1250.21" rotation="-22.4403 1.44575 -3.33612e-09" visibility="false" nodeId="13" fov="60" nearClip="0.01" farClip="6000" orthographicHeight="1500"/>
+    <Camera name="persp" translation="-1403.64 335.769 -1205.26" rotation="-42.3801 -34.8201 8.04362e-07" visibility="false" nodeId="13" fov="60" nearClip="0.01" farClip="6000" orthographicHeight="1500"/>
     <TerrainTransformGroup name="terrain" static="true" collisionFilterGroup="0x100" collisionFilterMask="0xfffff9c3" nodeId="15" heightMapId="1" patchSize="65" maxLODDistance="750" heightScale="255" unitsPerPixel="1" lodBlendStart="200" lodBlendEnd="300" lodTextureSize="4096" lodBlendStartDynamic="50" lodBlendEndDynamic="65" detailLodBlendDelta="5" materialId="7" castShadowMap="true" occNumLODs="1" occMaxLODDistance="300" occPatchSize="65" occLevel="2" occDistanceWeight="1" occMaxAdjacentFaces="10">
       <OccluderLods>
         <OccluderLod occLodLevel="0" occFaceCount="100" occMaxHausdorffDistance="7" occMaxHausdorffDistanceExtra="9" occMinHorizontalDistance="1" />
@@ -2820,19 +2820,19 @@
       <TransformGroup name="guidedTours" nodeId="1227"/>
       <Shape name="customCollisionMapBoundariesTunnelEast" translation="1012.56 76.2274 61.2505" rotation="0 -30 9.73108e-07" scale="21.7602 23.7295 17.9642" shapeId="1" static="true" collisionFilterGroup="0x3e" collisionFilterMask="0xfffffbff" nodeId="1228" castsShadows="false" receiveShadows="false" nonRenderable="true" materialIds="8"/>
       <TransformGroup name="npcSpots" nodeId="1229">
-        <TransformGroup name="grandpa" translation="-737.977 0 72.0835" rotation="2.73513e-05 30 1.32524e-05" nodeId="1230">
+        <TransformGroup name="grandpa" translation="1717.81 38.2607 -404.437" rotation="2.73513e-05 30 1.32524e-05" nodeId="1230">
           <TransformGroup name="farmhouse" rotation="0 0 -1.10503e-05" nodeId="1231" minuteOfDayStart="360" minuteOfDayEnd="1320" weatherPreventMask="0xe"/>
         </TransformGroup>
-        <TransformGroup name="helper" translation="-845.045 0 37.7941" rotation="1.03844e-05 26.4399 2.22382e-05" nodeId="1232">
+        <TransformGroup name="helper" translation="1723.14 38.2607 -345.444" rotation="1.03844e-05 26.4399 2.22382e-05" nodeId="1232">
           <TransformGroup name="farmhouse" translation="0 0 4.52995e-06" rotation="-2.26263e-05 -0 -2.1935e-05" nodeId="1233" minuteOfDayStart="360" minuteOfDayEnd="1320" weatherPreventMask="0xe"/>
         </TransformGroup>
-        <TransformGroup name="forester" translation="319.724 1.90735e-06 515.111" rotation="5.85299e-06 15 7.33288e-06" nodeId="1234">
+        <TransformGroup name="forester" translation="-1273.72 40.6459 -1507.49" rotation="5.85299e-06 15 7.33288e-06" nodeId="1234">
           <TransformGroup name="sawmill" translation="0 0 7.62939e-06" rotation="-8.29472e-06 -0 -1.46987e-05" nodeId="1235" minuteOfDayStart="360" minuteOfDayEnd="1320" weatherPreventMask="0xe"/>
         </TransformGroup>
-        <TransformGroup name="animalDealer" translation="-150.073 0 -0.582564" rotation="-180 20 -180" nodeId="1236">
+        <TransformGroup name="animalDealer" translation="-1321.91 40.6459 -1254.53" rotation="180 20 180" nodeId="1236">
           <TransformGroup name="animalDealer" rotation="0 1.70755e-06 7.63333e-14" nodeId="1237" minuteOfDayStart="360" minuteOfDayEnd="1320" weatherPreventMask="0xe"/>
         </TransformGroup>
-        <TransformGroup name="farmer" translation="368.061 0 -689.784" rotation="180 -5.00896e-06 180" nodeId="1238">
+        <TransformGroup name="farmer" translation="1723.25 38.2607 -30.7326" rotation="-180 -5.00896e-06 -180" nodeId="1238">
           <TransformGroup name="neighbourFarm" translation="0 0 -2.55704e-05" rotation="0 -0 8.39666e-13" nodeId="1239" minuteOfDayStart="360" minuteOfDayEnd="1320" weatherPreventMask="0xe"/>
         </TransformGroup>
       </TransformGroup>
@@ -2849,13 +2849,28 @@
           <TransformGroup name="storeSpawnPlace2End" translation="42.8742 0 0" nodeId="1256"/>
         </TransformGroup>
       </TransformGroup>
+      <TransformGroup name="trafficSystem" nodeId="89230">
+        <Shape name="spline_36_original_{'highway': ['motorway', 'trunk', 'primary']}" translation="0 0 2.5" shapeId="3" visibility="false" nodeId="89195" castsShadows="false" receiveShadows="false"/>
+        <Shape name="spline_36_reversed_{'highway': ['motorway', 'trunk', 'primary']}" translation="0 0 -2.5" shapeId="4" visibility="false" nodeId="89196" castsShadows="false" receiveShadows="false"/>
+        <Shape name="spline_37_original_{'highway': ['motorway', 'trunk', 'primary']}" translation="-2.5 0 0" shapeId="5" visibility="false" nodeId="89197" castsShadows="false" receiveShadows="false"/>
+        <Shape name="spline_37_reversed_{'highway': ['motorway', 'trunk', 'primary']}" translation="2.5 0 0" shapeId="6" visibility="false" nodeId="89198" castsShadows="false" receiveShadows="false"/>
+        <TransformGroup name="parkedCars" nodeId="89231"/>
+      </TransformGroup>
+      <TransformGroup name="pedestrianSystem" nodeId="89351">
+        <TransformGroup name="staticGroups" nodeId="89352">
+          <TransformGroup name="standardStatic" nodeId="89355"/>
+        </TransformGroup>
+        <Shape name="spline" translation="-992.945 39.4397 -1639.47" rotation="0 89.8165 0" shapeId="7" visibility="false" nodeId="89334" castsShadows="false" receiveShadows="false" distanceBlending="false"/>
+        <Shape name="spline" translation="1612.05 37.5419 -454.772" shapeId="8" visibility="false" nodeId="89359" castsShadows="false" receiveShadows="false" distanceBlending="false"/>
+        <Shape name="spline" translation="-1005.88 39.5361 -1631.93" rotation="180 -89.3418 -180" shapeId="9" visibility="false" nodeId="89371" castsShadows="false" receiveShadows="false" distanceBlending="false"/>
+      </TransformGroup>
     </TransformGroup>
     <TransformGroup name="map" nodeId="1257">
       <TransformGroup name="locations" nodeId="1258"/>
       <TransformGroup name="waterPlanes" translation="0 10 0" nodeId="89042">
         <TransformGroup name="waterPlane01" nodeId="89043">
-          <Shape name="waterSimulation" translation="-1837.63 0 215.723" shapeId="3" static="true" collisionFilterGroup="0x80000000" collisionFilterMask="0x1" clipDistance="8500" objectMask="0xffff" nodeId="89040" castsShadows="false" receiveShadows="true" materialIds="89044"/>
-          <Shape name="waterInMirror" translation="-1837.63 0 215.723" shapeId="3" clipDistance="3500" objectMask="0x8000" nodeId="89041" castsShadows="false" receiveShadows="true" materialIds="89045"/>
+          <Shape name="waterSimulation" translation="-1837.63 0 215.723" shapeId="10" static="true" collisionFilterGroup="0x80000000" collisionFilterMask="0x1" clipDistance="8500" objectMask="0xffff" nodeId="89040" castsShadows="false" receiveShadows="true" materialIds="89044"/>
+          <Shape name="waterInMirror" translation="-1837.63 0 215.723" shapeId="10" clipDistance="3500" objectMask="0x8000" nodeId="89041" castsShadows="false" receiveShadows="true" materialIds="89045"/>
         </TransformGroup>
       </TransformGroup>
     </TransformGroup>
@@ -16833,7 +16848,6 @@
         <ReferenceNode name="lodgepolePine_stage03" translation="1258 36.0973 -707" rotation="0 322.849 0" referenceId="663" nodeId="88959"/>
       </TransformGroup>
     </TransformGroup>
-    <Shape name="spline" translation="-2043.42 35.7936 816.063" rotation="180 16.4999 180" shapeId="4" nodeId="88978" castsShadows="false" receiveShadows="false" distanceBlending="false"/>
   </Scene>
 
   <ProceduralPlacement>
@@ -18768,6 +18782,48 @@
     <UserAttribute nodeId="1255">
       <Attribute name="onCreate" type="scriptCallback" value="BaseMission.onCreateStoreSpawnPlace"/>
       <Attribute name="yOffset" type="float" value="0.1"/>
+    </UserAttribute>
+    <UserAttribute nodeId="89230">
+      <Attribute name="onCreate" type="scriptCallback" value="TrafficSystem.onCreate"/>
+      <Attribute name="xmlFile" type="string" value="map/config/trafficSystem.xml"/>
+    </UserAttribute>
+    <UserAttribute nodeId="89195">
+      <Attribute name="maxSpeedScale" type="float" value="1"/>
+      <Attribute name="speedLimit" type="integer" value="100"/>
+    </UserAttribute>
+    <UserAttribute nodeId="89196">
+      <Attribute name="maxSpeedScale" type="float" value="1"/>
+      <Attribute name="speedLimit" type="integer" value="100"/>
+    </UserAttribute>
+    <UserAttribute nodeId="89197">
+      <Attribute name="maxSpeedScale" type="float" value="1"/>
+      <Attribute name="speedLimit" type="integer" value="100"/>
+    </UserAttribute>
+    <UserAttribute nodeId="89198">
+      <Attribute name="maxSpeedScale" type="float" value="1"/>
+      <Attribute name="speedLimit" type="integer" value="100"/>
+    </UserAttribute>
+    <UserAttribute nodeId="89351">
+      <Attribute name="onCreate" type="scriptCallback" value="PedestrianSystem.onCreate"/>
+      <Attribute name="xmlFile" type="string" value="map/config/pedestrianSystem.xml"/>
+    </UserAttribute>
+    <UserAttribute nodeId="89355">
+      <Attribute name="groupName" type="string" value="standardStatic"/>
+    </UserAttribute>
+    <UserAttribute nodeId="89334">
+      <Attribute name="density" type="float" value="0.1"/>
+      <Attribute name="groupName" type="string" value="standard"/>
+      <Attribute name="width" type="float" value="2"/>
+    </UserAttribute>
+    <UserAttribute nodeId="89359">
+      <Attribute name="density" type="float" value="0.1"/>
+      <Attribute name="groupName" type="string" value="standard"/>
+      <Attribute name="width" type="float" value="2"/>
+    </UserAttribute>
+    <UserAttribute nodeId="89371">
+      <Attribute name="density" type="float" value="0.1"/>
+      <Attribute name="groupName" type="string" value="standard"/>
+      <Attribute name="width" type="float" value="2"/>
     </UserAttribute>
     <UserAttribute nodeId="89040">
       <Attribute name="onCreate" type="scriptCallback" value="Environment.onCreateWater"/>
