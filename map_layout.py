@@ -733,20 +733,55 @@ for _k in range(6):
         tags={'landuse': 'farmland'},
     )
 
-# Industrial farmyard north of town across primary road (reduced realistic size)
-_IND_NW_WIDTH_M = 350.0
-_IND_NW_HEIGHT_M = 120.0
+# Zona Industrial Norte: parque industrial con cuadrículas de 100 x 100 metros (2 filas x 5 columnas = 10 ha)
+# Ocupa el área X=600..1100, Y=200..400 conectado directamente a Ruta Y=400
+_IND_N_X0 = 600.0
+_IND_N_Y0 = 200.0
+_IND_N_COLS = 5
+_IND_N_ROWS = 2
+_IND_N_BLOCK_M = 100.0
+_IND_N_SPAN_X_M = _IND_N_COLS * _IND_N_BLOCK_M   # 500.0 m
+_IND_N_SPAN_Y_M = _IND_N_ROWS * _IND_N_BLOCK_M   # 200.0 m
+
 add_pad(
-    pid='pad_industrial_nw',
+    pid='pad_industrial_north',
     name='Zona Industrial Norte',
     kind='industry',
-    centre=(850.0, 400.0 - _IND_NW_HEIGHT_M / 2.0),
-    size=(_IND_NW_WIDTH_M, _IND_NW_HEIGHT_M),
+    centre=(_IND_N_X0 + _IND_N_SPAN_X_M / 2.0, _IND_N_Y0 + _IND_N_SPAN_Y_M / 2.0),
+    size=(_IND_N_SPAN_X_M, _IND_N_SPAN_Y_M),
     feather_m=20.0,
     drain_grade=0.0,
     level=True,
     tags={'landuse': 'farmyard', 'building': 'industrial'},
 )
+
+# Calles internas Norte-Sur de la cuadrícula industrial norte (conectadas a Ruta Y=400)
+for _k in range(_IND_N_COLS + 1):
+    _sx = _IND_N_X0 + _k * _IND_N_BLOCK_M
+    add_corridor(
+        cid=f'road_ind_n_v{_k}',
+        name=f'Calle Industrial N-S {_k+1}',
+        kind='secondary',
+        axis=[(_sx, _IND_N_Y0), (_sx, 400.0)],
+        half_width_m=3.5,
+        feather_m=6.0,
+        grade_max=0.05,
+        tags={'highway': 'secondary', 'name': f'Calle Industrial N-S {_k+1}'},
+    )
+
+# Calles internas Este-Oeste de la cuadrícula industrial norte
+for _j in range(_IND_N_ROWS):
+    _sy = _IND_N_Y0 + _j * _IND_N_BLOCK_M
+    add_corridor(
+        cid=f'road_ind_n_h{_j}',
+        name=f'Calle Industrial E-O {_j+1}',
+        kind='secondary',
+        axis=[(_IND_N_X0, _sy), (_IND_N_X0 + _IND_N_SPAN_X_M, _sy)],
+        half_width_m=3.5,
+        feather_m=6.0,
+        grade_max=0.05,
+        tags={'highway': 'secondary', 'name': f'Calle Industrial E-O {_j+1}'},
+    )
 
 # Section Roads (all marked as terracerías between fields)
 _PLSS_SEC_X = (1380.0, 2425.0, 3012.5)
@@ -794,6 +829,58 @@ add_corridor(
     feather_m=6.0,
     grade_max=0.08,
     tags={'highway': 'track', 'surface': 'dirt', 'name': 'Terracería Sección Y=950'},
+)
+# Terracería Sección Y=950 Tramo Oeste (acceso norte a parcelas 23 y 24)
+add_corridor(
+    cid='road_sec_y950_w',
+    name='Terracería Sección Y=950 Oeste',
+    kind='track',
+    axis=[(564.0, 950.0), (1380.0, 950.0)],
+    half_width_m=3.0,
+    feather_m=6.0,
+    grade_max=0.08,
+    tags={'highway': 'track', 'surface': 'dirt', 'name': 'Terracería Sección Y=950 Oeste'},
+)
+# Caminos internos de acceso para las parcelas 23 y 24
+add_corridor(
+    cid='track_p23_24_ns',
+    name='Camino Central Parcelas 23-24',
+    kind='track',
+    axis=[(960.0, 950.0), (960.0, 1525.0)],
+    half_width_m=2.5,
+    feather_m=5.0,
+    grade_max=0.08,
+    tags={'highway': 'track', 'surface': 'dirt', 'name': 'Camino Central Parcelas 23-24'},
+)
+add_corridor(
+    cid='track_p23_w_ns',
+    name='Camino Acceso Parcelas Cuadradas',
+    kind='track',
+    axis=[(760.0, 950.0), (760.0, 1525.0)],
+    half_width_m=2.5,
+    feather_m=5.0,
+    grade_max=0.08,
+    tags={'highway': 'track', 'surface': 'dirt', 'name': 'Camino Acceso Parcelas Cuadradas'},
+)
+add_corridor(
+    cid='track_p23_24_h1',
+    name='Camino Interparcelario 1',
+    kind='track',
+    axis=[(564.0, 1140.0), (1380.0, 1140.0)],
+    half_width_m=2.5,
+    feather_m=5.0,
+    grade_max=0.08,
+    tags={'highway': 'track', 'surface': 'dirt', 'name': 'Camino Interparcelario 1'},
+)
+add_corridor(
+    cid='track_p23_24_h2',
+    name='Camino Interparcelario 2',
+    kind='track',
+    axis=[(564.0, 1330.0), (1380.0, 1330.0)],
+    half_width_m=2.5,
+    feather_m=5.0,
+    grade_max=0.08,
+    tags={'highway': 'track', 'surface': 'dirt', 'name': 'Camino Interparcelario 2'},
 )
 add_corridor(
     cid='road_sec_y1525',
@@ -903,7 +990,7 @@ add_corridor(
     cid='road_town_east_link_s',
     name='Acceso Sur Pueblo Este',
     kind='secondary',
-    axis=[(_TOWN_EAST_X0, _TOWN_EAST_Y1), (_TOWN_EAST_COLLECTOR_X, _TOWN_EAST_Y1)],
+    axis=[(_TOWN_EAST_X0, _TOWN_EAST_Y1), (3800.0, _TOWN_EAST_Y1)],
     half_width_m=3.5,
     feather_m=6.0,
     grade_max=0.05,
@@ -933,6 +1020,89 @@ for _k in range(8):
         fid=f'field_pe_{_k+1}',
         name=f'Parcela Pueblo Este {_k+1} (1.5 ha)',
         ring=rect_ring(3790.0, _pe_y0, 4040.0, _pe_y1),
+        tags={'landuse': 'farmland'},
+    )
+
+# Zona Industrial Pueblo Este: cuadrícula de 2x2 (100x100m cada bloque = 4.0 ha) en el lado sur del pueblo
+_IND_E_X0 = 3600.0
+_IND_E_Y0 = 2100.0
+_IND_E_COLS = 2
+_IND_E_ROWS = 2
+_IND_E_BLOCK_M = 100.0
+_IND_E_SPAN_X_M = _IND_E_COLS * _IND_E_BLOCK_M   # 200.0 m
+_IND_E_SPAN_Y_M = _IND_E_ROWS * _IND_E_BLOCK_M   # 200.0 m
+
+add_pad(
+    pid='pad_industrial_east',
+    name='Zona Industrial Pueblo Este',
+    kind='industry',
+    centre=(_IND_E_X0 + _IND_E_SPAN_X_M / 2.0, _IND_E_Y0 + _IND_E_SPAN_Y_M / 2.0),
+    size=(_IND_E_SPAN_X_M, _IND_E_SPAN_Y_M),
+    feather_m=15.0,
+    drain_grade=0.0,
+    level=True,
+    tags={'landuse': 'farmyard', 'building': 'industrial'},
+)
+
+# Calles internas Norte-Sur (X=3700 y X=3800; X=3600 ya es Ruta 3600)
+for _k in range(1, _IND_E_COLS + 1):
+    _sx = _IND_E_X0 + _k * _IND_E_BLOCK_M
+    add_corridor(
+        cid=f'road_ind_e_v{_k}',
+        name=f'Calle Industrial Este N-S {_k}',
+        kind='secondary',
+        axis=[(_sx, _IND_E_Y0), (_sx, _IND_E_Y0 + _IND_E_SPAN_Y_M)],
+        half_width_m=3.5,
+        feather_m=6.0,
+        grade_max=0.05,
+        tags={'highway': 'secondary', 'name': f'Calle Industrial Este N-S {_k}'},
+    )
+
+# Calles internas Este-Oeste (Y=2200 y Y=2300; Y=2100 es Acceso Sur Pueblo Este)
+for _j in range(1, _IND_E_ROWS + 1):
+    _sy = _IND_E_Y0 + _j * _IND_E_BLOCK_M
+    add_corridor(
+        cid=f'road_ind_e_h{_j}',
+        name=f'Calle Industrial Este E-O {_j}',
+        kind='secondary',
+        axis=[(_IND_E_X0, _sy), (_IND_E_X0 + _IND_E_SPAN_X_M, _sy)],
+        half_width_m=3.5,
+        feather_m=6.0,
+        grade_max=0.05,
+        tags={'highway': 'secondary', 'name': f'Calle Industrial Este E-O {_j}'},
+    )
+
+# Reemplazo de Parcelas 23 y 24:
+# Sector Oeste (antigua Parcela 23): 6 parcelas cuadradas de ~4 ha (192 x 182 m, ratio ~1.05)
+# Sector Este (antigua Parcela 24): 3 parcelas rectangulares de ~8 ha (408 x 182 m, ratio ~2.24)
+_P23_P24_ROWS_Y = [
+    (954.0, 1136.0),  # Fila 1 (Norte)
+    (1144.0, 1326.0), # Fila 2 (Centro)
+    (1334.0, 1517.0), # Fila 3 (Sur)
+]
+
+# Sector Oeste: 6 parcelas cuadradas
+_P23_COLS_X = [
+    (564.0, 756.0),  # Columna A
+    (764.0, 956.0),  # Columna B
+]
+_p23_labels = [('1A', '1B'), ('2A', '2B'), ('3A', '3B')]
+for _r_idx, (_ry0, _ry1) in enumerate(_P23_P24_ROWS_Y):
+    for _c_idx, (_cx0, _cx1) in enumerate(_P23_COLS_X):
+        _lbl = _p23_labels[_r_idx][_c_idx]
+        add_field(
+            fid=f'field_p23_{_lbl.lower()}',
+            name=f'Parcela 23-{_lbl} (Cuadrada 4 ha)',
+            ring=rect_ring(_cx0, _ry0, _cx1, _ry1),
+            tags={'landuse': 'farmland'},
+        )
+
+# Sector Este: 3 parcelas rectangulares
+for _r_idx, (_ry0, _ry1) in enumerate(_P23_P24_ROWS_Y):
+    add_field(
+        fid=f'field_p24_{_r_idx+1}',
+        name=f'Parcela 24-{_r_idx+1} (Rectangular 8 ha)',
+        ring=rect_ring(964.0, _ry0, 1372.0, _ry1),
         tags={'landuse': 'farmland'},
     )
 
@@ -1167,12 +1337,18 @@ def _retract_from_shelterbelts(x0, y0, x1, y1):
     return x0, y0, x1, y1
 
 
-# Village bounds to protect rural village layouts from macro-PLSS slicing
+# Village & Industrial bounds to protect specialized layouts from macro-PLSS slicing
 _VILLAGE_OBSTACLES = [
     # Pueblo Valle Bonito: area encompassing 2 street axes and small rear garden plots
     (595.0, 395.0, 1205.0, 875.0),
     # Pueblo Este: area encompassing collector road, house yards and 1.5 ha parcels
     (3595.0, 1595.0, 4045.0, 2105.0),
+    # Zona Industrial Norte: cuadrícula 5x2 de 100x100m (X=600..1100, Y=200..400)
+    (595.0, 195.0, 1105.0, 405.0),
+    # Zona Industrial Pueblo Este: cuadrícula 2x2 de 100x100m (X=3600..3800, Y=2100..2300)
+    (3595.0, 2095.0, 3805.0, 2305.0),
+    # Sector Parcelas 23 y 24: parcelas cuadradas de 4 ha y rectangulares de 8 ha
+    (560.0, 946.0, 1376.0, 1521.0),
 ]
 
 
